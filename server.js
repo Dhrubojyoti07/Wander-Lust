@@ -27,14 +27,14 @@ app.engine("ejs",ejsmate);
  store= MongoStore.create({
     mongoUrl: process.env.MONGODB_URL,
     crypto: {
-        secret: "mySuperSercretCode",
+        secret: process.env.SECRET_KEY,
     },
     touchAfter: 24 * 3600,
  }
 );
 const sessionOptions = {
     store,
-    secret: "mySuperSercretCode",
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: {
