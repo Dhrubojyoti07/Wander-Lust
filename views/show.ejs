@@ -1,0 +1,91 @@
+<%-layout("../layouts/boilerplate.ejs")%>
+<body>
+    <script>
+        const maptoken="<%=process.env.MAPBOX_TOKEN%>";
+        const geometry=<%-JSON.stringify(data.geometry)%>;
+        const data=<%-JSON.stringify(data)%>;
+    </script>
+        <br>
+        <div class="card row col-8 offset-2">
+                <img src="<%=data.image.url%>" class="card-img-top" alt="Listing Image">
+                <div class="card-img-overlay">
+                    <div class="card-text">abcd</div>
+                </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                             <h3><%=data.title%></h3>
+                             <p><%=data.description%></p>
+                             <p>&#8377;<%=data.price.toLocaleString("en-IN")%>/night</p>
+                             <p><%=data.location%></p>
+                             <p><%=data.country%></p>
+                    </div>
+            </div>
+        <%if(currentUser && currentUser._id.equals(data.User._id)){%>
+        <div class="btns offset-4 "><form action="/edit/<%=data.id%>"><button class="btn btn-dark btncust">edit listing</button></form><form method="post" action="/delete/<%=data.id%>?_method=DELETE"><button class="btn btn-dark btncust" style="margin-left: 2rem;">delete listing</button></form></div>
+        <%}%>
+        <%if(currentUser && !currentUser._id.equals(data.User._id)){%>
+        <hr />
+        <br>
+        <div class="col-8 offset-2">
+            <h4>Owner details</h4>
+            <p><b>Name:</b> <%=data.User.username%></p>
+            <p><b>Email:</b> <%=data.User.email%></p>
+        </div>
+        <br>
+        <%}%>
+        <hr />
+        <%if(currentUser){%>
+        <div class=" col-8 offset-2">
+            <h4>Reviews</h4>
+            <form action="/view/<%=data.id%>/review" method="post" class="needs-validation" novalidate>
+                <fieldset class="starability-slot">
+                    <p>Rating</p>
+                    <input type="radio" id="first-rate1" name="rating" checked value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="rating" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="rating" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="rating" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="rating" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+                <br>
+                <div class="mb-3">
+                    <label for="review" class="form-label">Write a comment below</label>
+                    <textarea class="form-control" name="comment" rows="3" required></textarea>
+                    <div class="invalid-feedback">Please enter some coments</div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-dark">Submit Review</button>
+                <hr />
+            <%}%>
+        </form>
+                
+                <div class="row col-6 offset-2">
+                    <h4>All reviews</h4>
+                    <%if(data.review.length === 0){%>
+                        <p>No reviews yet.Be the first to review</p>
+                    <%}%>
+                    <% for(let rev of data.review){%>
+                        <div class="card  mb-3 review-card" >
+                            <div class="card-body">
+                                <h5 class="card-title review-name"><%=rev.User.username%></h5>
+                                <p class="starability-result card-text review-stars" data-rating="<%=rev.rating%>"></p>
+                                 <p class="card-text review-text"><%=rev.comment%></p>
+                                <%if(currentUser && currentUser._id.equals(rev.User._id)){%>
+                                <form action="/view/<%=data.id%>/review/<%=rev.id%>?_method=DELETE" method="post"><button class="btn btn-sm btn-dark del-btn">Delete Review</button></form>
+                                <%}%>
+                            </div>
+                        </div>
+                    <%}%>
+                </div>
+            <hr />    
+        </div>
+        <div class="row col-8 offset-2">
+        <h4>Where you will be</h4>
+        <div id="map"></div>
+        </div>
+        <script src="../js/map.js"></script>
+</body>

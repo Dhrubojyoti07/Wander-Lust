@@ -1,0 +1,64 @@
+<%-layout("../layouts/boilerplate.ejs")%>
+<body>
+    <br>
+    <div class="row col-8 offset-2">
+    <h3>Edit your listing</h3>
+    <form action="/update/<%=data.id%>?_method=PUT" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+    <div><label for="tittle" class="form-label">Tittle</label>
+    <input type="text" name="title" id="tittle" class="form-control" value="<%=data.title%>" required>
+    <div class="invalid-feedback">Please enter a catchy title for your listing.</div><br></div>
+    <div><label for="description" class="form-label">Description</label>
+    <textarea name="description" id="description" class="form-control" required><%=data.description%></textarea>
+    <div class="invalid-feedback">A description is required to help others understand your listing.</div><br></div>
+    <div class="mb-3">
+        <img src="<%=data.image.url %>" alt="<%=data.title%>" class="preview" style="width: 200px;">
+    </div>
+    <div><label for="url" class="form-label">Image</label>
+    <input type="file" name="listing_image" id="url" class="form-control img-input" value="<%=data.image.url%>" >
+    <div class="invalid-feedback">Please upload a valid image.</div><br></div>
+    <input type="hidden" name="listing_image" value="<%= data.image.url %>">
+    <div class="row">
+    <div class="col-md-4"><label for="price" class="form-label">Price</label>
+    <input type="number" name="price" id="price" class="form-control"  value="<%=data.price%>" required>
+    <div class="invalid-feedback">Enter a valid price</div><br></div>
+    <div class="col-md-8"><label for="country" class="form-label">Country</label>
+    <input type="text" name="country" id="country" class="form-control"  value="<%=data.country%>" required>
+    <div class="invalid-feedback">Please select or enter a country.</div><br></div>
+    </div>
+    <div><label for="location" class="form-label">Location</label>
+    <input type="text" name="location" id="location" class="form-control"  value="<%=data.location%>" required>
+    <div class="invalid-feedback">Location is required. Please specify the city and state.</div><br></div>
+   <label for="category" class="form-label">Select Category</label>
+    <select name="category" id="category" class="form-control">
+        <option value="Trending">Trending</option>
+        <option value="Rooms">Rooms</option>
+        <option value="Destinations">Destinations</option>
+        <option value="Mountains">Mountains</option>
+        <option value="Arctic">Arctic</option>
+        <option value="Seas">Seas</option>
+        <option value="Castles">Castles</option>
+        <option value="Farmhouses">Farmhouses</option>
+        <option value="Camps">Camps</option>
+        <option value="Beaches">Beaches</option>
+        <option value="Cities">Cities</option>
+        <option value="Countryside">Countryside</option>
+    </select>
+    <br>
+    <div class="invalid-feedback">Please select a category for your listing.</div>
+    </div>
+    <button class="btn btn-dark">Edit</button>
+    </form>
+    </div>
+    <br>
+    <script>
+        const imgInput = document.querySelector(".img-input");
+        const preview = document.querySelector(".preview");
+        imgInput.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const previewURL = URL.createObjectURL(file);
+                preview.src = previewURL;
+            }
+        });
+    </script>
+</body>

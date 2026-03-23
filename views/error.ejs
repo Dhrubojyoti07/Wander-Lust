@@ -1,0 +1,10 @@
+<%-layout("../layouts/boilerplate.ejs")%>
+<body>
+    <br>
+    <br>
+    <div class="row col-8 offset-2">
+        <h3 class="text-danger" style="text-align: center;">Error: <%=err.statusCode%></h3>
+        <p style="text-align: center;"><%=err.message%></p>
+        <a href="/home" class="btn btn-dark " style="display: flex;justify-content: center;">Go back to Home</a>
+    </div>
+</body>

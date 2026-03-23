@@ -1,0 +1,110 @@
+<%-layout("../layouts/boilerplate.ejs")%>
+<body>
+  <div style="display: flex;">
+<div class="position-relative filter-wrapper">  
+  <button class="btn btn-light position-absolute top-50 start-0 translate-middle-y scroll-btn" id="scrollLeft">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+
+  <div class="d-flex overflow-auto filters text-center" id="filterScroll">
+    <a href="/category/Trending" class="filter me-3">
+      <i class="fa-solid fa-fire d-block"></i>
+      <span>Trending</span>
+    </a>
+    <a href="/category/Rooms" class="filter me-3">
+      <i class="fa-solid fa-bed d-block"></i>
+      <span>Rooms</span>
+    </a>
+    <a href="/category/Destinations" class="filter me-3">
+      <i class="fa-solid fa-mountain-city d-block"></i>
+      <span>Destinations</span>
+    </a>
+    <a href="/category/Mountains" class="filter me-3">
+      <i class="fa-solid fa-mountain d-block"></i>
+      <span>Mountains</span>
+    </a>
+    <a href="/category/Arctic" class="filter me-3">
+      <i class="fa-solid fa-snowflake d-block"></i>
+      <span>Arctic</span>
+    </a>
+    <a href="/category/Seas" class="filter me-3">
+      <i class="fa-solid fa-person-swimming d-block"></i>
+      <span>Seas</span>
+    </a>
+    <a href="/category/Castles" class="filter me-3">
+      <i class="fa-brands fa-fort-awesome d-block"></i>
+      <span>Castles</span>
+    </a>
+    <a href="/category/Farmhouses" class="filter me-3">
+      <i class="fa-solid fa-cow d-block"></i>
+      <span>Farmhouses</span>
+    </a>
+    <a href="/category/Camps" class="filter me-3">
+      <i class="fa-solid fa-campground d-block"></i>
+      <span>Camps</span>
+    </a>
+    <a href="/category/Beaches" class="filter me-3">
+      <i class="fa-solid fa-umbrella-beach d-block"></i>
+      <span>Beaches</span>
+    </a>
+    <a href="/category/Cities" class="filter me-3">
+      <i class="fa-solid fa-city d-block"></i>
+      <span>Cities</span>
+    </a>
+    <a href="/category/Countryside" class="filter me-3">
+      <i class="fa-solid fa-tree-city d-block"></i>
+      <span>Countryside</span>
+    </a>
+  </div>
+  <button class="btn btn-light position-absolute top-50 end-0 translate-middle-y scroll-btn" id="scrollRight">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</div>
+<div class="tax-toogle">
+  <div class="form-check form-check-reverse form-switch">
+    <input class="form-check-input" type="checkbox" id="taxToggle">
+    <label class="form-check-label" for="taxToggle">Display Total after Taxes</label>
+  </div>
+</div>
+</div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+        <%for(let dat of data){if(dat){%>
+        <a href="/view/<%=dat.id%>" class="listing-link">
+            <div class="card">
+                <img src="<%=dat.image.url%>" class="card-img-top" alt="Listing Image">
+                <div class="card-img-overlay">
+                    <div class="card-text">abcd</div>
+                </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <b><%=dat.title%><br></b>
+                            <div style="display: flex;flex-wrap: wrap;">&#8377;<%=dat.price.toLocaleString("en-IN")%> <div class="tax" style="display: none;color:grey ;">&nbsp;&nbsp;<i> +18% gst </i> &nbsp; </div> /night</div>
+                        </p>
+                    </div>
+            </div>
+        </a>
+        <%}}%></div>
+<script>
+  const scrollContainer = document.getElementById('filterScroll');
+  document.getElementById('scrollLeft').onclick = () => {
+    scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
+  };
+  document.getElementById('scrollRight').onclick = () => {
+    scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
+  };
+  const taxToogle=document.getElementById("taxToggle");
+  const tax=document.getElementsByClassName("tax");
+  taxToogle.addEventListener("click",()=>{
+    console.log("clicked");
+    if(taxToogle.checked){
+      for(let i=0;i<tax.length;i++){
+        tax[i].style.display="inline";
+      }
+    }else{
+      for(let i=0;i<tax.length;i++){
+        tax[i].style.display="none";
+      }
+    }
+  });
+</script>
+</body>

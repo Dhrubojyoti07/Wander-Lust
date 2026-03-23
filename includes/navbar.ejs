@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="margin-bottom: 5px;" href="/home"><i class="fa-regular fa-compass"></i>Wanders Lust</a>
+      <div class="mx-auto">
+         <div class="ms-3 flex-grow-1">
+        <form class="d-flex search-form" role="search" action="/search/" method="GET">
+          <% if(typeof search !== "undefined" && search){ %>
+          <input class="form-control search-input" type="search" placeholder="Search listings..." aria-label="Search"
+            value="<%=search%>" name="q">
+          <% } else { %>
+          <input class="form-control search-input" type="search" placeholder="Search listings..." aria-label="Search"
+            name="q">
+          <% } %>
+          <button class="btn search-btn" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+      </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/mylistings">My Listings</a>
+        <a class="nav-link" href="/new">New listings</a>
+        <%if(!currentUser){%>
+        <a class="nav-link " href="/login">Login</a>
+        <a class="nav-link" href="/signup">Sign Up</a>
+        <%}else{%>
+        <a class="nav-link" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+        <%}%>
+      </div>
+    </div>
+  </div>
+</nav>
