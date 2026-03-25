@@ -7,9 +7,7 @@ const flash=require("connect-flash");
 const {listingschema,reviewschema}=require("../schema.js");
 const {isLoggedIn,isOwner,validatelisting}=require("../middleware.js");
 const listingcontroller=require("../controller/listing.js");
-const multer  = require('multer');
-const { storage } = require("../cloudConfig.js");
-const upload = multer({ storage });
+const { upload } = require("../cloudConfig.js");
 router.get("/home",   
 listingcontroller.home
 );
