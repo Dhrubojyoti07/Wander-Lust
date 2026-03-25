@@ -17,7 +17,7 @@ const flash=require("connect-flash");
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const User=require("./models/User.js");
-mongoose.connect(process.env.MONGODB_URL).then(()=>{console.log("mongodb is connected");}).catch((err)=>{console.log(err);});
+mongoose.connect(process.env.DB_URL).then(()=>{console.log("mongodb is connected");}).catch((err)=>{console.log(err);});
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"/views"));
 app.use(exp.static(path.join(__dirname,"/public")));
@@ -25,7 +25,7 @@ app.use(mo("_method"));
 app.use(exp.urlencoded({ extended: true }));
 app.engine("ejs",ejsmate);
  store= MongoStore.create({
-    mongoUrl: process.env.MONGODB_URL,
+     mongoUrl: process.env.DB_URL,
     crypto: {
         secret: process.env.SECRET_KEY,
     },
