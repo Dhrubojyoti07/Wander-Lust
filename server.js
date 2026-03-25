@@ -24,7 +24,7 @@ app.use(exp.static(path.join(__dirname,"/public")));
 app.use(mo("_method"));
 app.use(exp.urlencoded({ extended: true }));
 app.engine("ejs",ejsmate);
- store= MongoStore.create({
+const store= MongoStore.create({
     mongoUrl: process.env.MONGODB_URL,
     crypto: {
         secret: process.env.SECRET_KEY,
@@ -55,16 +55,13 @@ app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
     res.locals.currentUser = req.user;
+    res.locals.previewurl = null;
+    res.locals.search="";
     next();
 })
 app.use(listingroutes);
 app.use(reviewroutes);
 app.use(userroutes);
-app.use((req, res, next) => {
-  res.locals.previewurl = null;
-  res.locals.search="";
-  next();
-});
 app.use((req, res) => {
     res.status(404).render("error.ejs", { err: { statusCode: 404, message: "Page Not Found" } });
 });
